@@ -5,9 +5,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
 import { useDispatch } from "react-redux"
-import { setStateAuth } from "@/store/authSlice"
+import { setStateAuth, setUser } from "@/store/authSlice"
 import $api from "@/http/api"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const formSchema = z.object({
     fullName: z.string().min(4).max(40),
@@ -17,6 +18,7 @@ const formSchema = z.object({
 })
 
 const Register = () => {
+    const navigate = useNavigate()
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch()
     const form = useForm<z.infer<typeof formSchema>>({
@@ -33,7 +35,11 @@ const Register = () => {
         try {
             setLoading(true)
             const res = await $api.post('/customers/create', values)
-            console.log(res);
+            if (res.status === 201) {
+                localStorage.setItem("accessToken", res.data.data.accessToken)
+                dispatch(setUser(res.data.data.customer))
+                navigate('/')
+            }
         } catch (error) {
             console.log(error);
         }
