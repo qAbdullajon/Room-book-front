@@ -18,7 +18,7 @@ const BookingModal = () => {
     const [date, setDate] = useState("")
     const user = useSelector((state: RootState) => state.auth.user)
     const rooms = useSelector((state: RootState) => state.rooms.rooms)
-    const { books, isOpen, roomId } = useSelector((state: RootState) => state.books)
+    const { isOpen, roomId } = useSelector((state: RootState) => state.books)
 
     const handleSubmit = async () => {
         if (!date) {

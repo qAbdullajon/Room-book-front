@@ -1,6 +1,5 @@
 import { $axios } from "@/http"
 import $api from "@/http/api"
-import { setUser } from "@/store/authSlice"
 import { setOpen, setRooms, setValRoom } from "@/store/roomSlice"
 import type { RootState } from "@/store/store"
 import { useEffect } from "react"
